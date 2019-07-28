@@ -4,9 +4,6 @@ module Pundit
 
     included do
       include ActionController::Rescue
-      include AbstractController::Callbacks
-
-      after_action :enforce_policy_use
 
       JSONAPI.configure do |config|
         error = Pundit::NotAuthorizedError
