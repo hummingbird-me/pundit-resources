@@ -13,21 +13,9 @@ module Pundit
 
     module ClassMethods
       def records(options = {})
-        warn_if_show_defined
-
         context = options[:context]
         context[:policy_used]&.call
         Pundit.policy_scope!(context[:current_user], _model_class)
-      end
-
-      private
-
-      def warn_if_show_defined
-        policy_class = Pundit::PolicyFinder.new(_model_class.new).policy!
-        if policy_class.instance_methods(false).include?(:show?)
-          puts "WARN: pundit-resources does not use the show? action."
-          puts "      #{policy_class::Scope} will be used instead."
-        end
       end
     end
 
